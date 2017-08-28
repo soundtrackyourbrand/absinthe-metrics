@@ -1,0 +1,3 @@
+%{"absinthe": {:hex, :absinthe, "1.3.2", "1d16ee5ceeb8b90e37f936b924caacc099b9da667e9c7e6a4d729f41197123d4", [], [], "hexpm"},
+  "prometheus": {:hex, :prometheus, "3.4.0", "91759726f2e384df2ef48daf039d506705a7aa81dcbbb2dbffee1fd0c5431d32", [], [], "hexpm"},
+  "prometheus_ex": {:hex, :prometheus_ex, "1.4.1", "5e08decec6f925c296b99eb136b40e8dacdedd9f03553575ee88a38a23ce9601", [], [{:prometheus, "~> 3.4", [hex: :prometheus, repo: "hexpm", optional: false]}], "hexpm"}}
