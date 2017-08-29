@@ -11,7 +11,7 @@ defmodule AbsintheMetrics.Mixfile do
       description: description(),
       package: package(),
       name: "absinthe_metrics",
-      source_url: "https://github.com/elixir-ecto/postgrex"
+      source_url: "https://github.com/soundtrackyourbrand/absinthe-metrics"
     ]
   end
 
