@@ -1,5 +1,7 @@
 # AbsintheMetrics
 
+[![Build Status](https://travis-ci.org/soundtrackyourbrand/absinthe-metrics.svg?branch=master)](https://travis-ci.org/soundtrackyourbrand/absinthe-metrics)
+
 **TODO: Add description**
 
 ## Installation
