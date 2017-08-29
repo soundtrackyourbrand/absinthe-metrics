@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/soundtrackyourbrand/absinthe-metrics.svg?branch=master)](https://travis-ci.org/soundtrackyourbrand/absinthe-metrics)
 
-AbsintheMetrics provides time (or counter) based metrics for your Absinthe resolvers to allow you to keep track of where your queries are spending their time.
+AbsintheMetrics provides time (or counter) based metrics for your [Absinthe](https://github.com/absinthe-graphql/absinthe) resolvers to allow you to keep track of where your queries are spending their time.
 
 Usage is fairly straight forward,
 
