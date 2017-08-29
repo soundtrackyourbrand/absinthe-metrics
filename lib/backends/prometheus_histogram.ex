@@ -11,6 +11,6 @@ defmodule AbsintheMetrics.Backend.PrometheusHistogram do
 
   def instrument(object, field, {status, _}, time), do: Histogram.observe([name: to_metric(object, field), labels: [status]], time)
 
-  defp to_metric(:query, field), do: field
-  defp to_metric(object, field), do: "#{object}_#{field}" |> String.to_atom()
+  defp to_metric(:query, field), do: "#{field}_duration_microseconds"
+  defp to_metric(object, field), do: "#{object}_#{field}_duration_microseconds" |> String.to_atom()
 end
