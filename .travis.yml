@@ -1,0 +1,8 @@
+language: elixir
+sudo: false
+elixir: 1.4.4
+otp_release: 19.1
+notifications:
+  recipients:
+    - fredrik.enestad@soundtrackyourbrand.com
+    - fredrik@soundtrackyourbrand.com
