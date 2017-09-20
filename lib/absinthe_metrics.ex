@@ -41,12 +41,13 @@ defmodule AbsintheMetrics do
   end
 
   def call(%Resolution{state: :unresolved} = res, {adapter, _}, _config) do
-    now = :os.timestamp()
+    now = :erlang.monotonic_time()
     %{res | middleware: res.middleware ++ [{{AbsintheMetrics, :after_resolve}, start_at: now, adapter: adapter, field: res.definition.schema_node.identifier, object: res.parent_type.identifier}]}
   end
 
   def after_resolve(%Resolution{state: :resolved} = res, [start_at: start_at, adapter: adapter, field: field, object: object]) do
-    diff = :timer.now_diff(:os.timestamp(), start_at)
+    end_at = :erlang.monotonic_time()
+    diff =  end_at - start_at
     result = case res.errors do
       [] -> {:ok, res.value}
       errors -> {:error, errors}
