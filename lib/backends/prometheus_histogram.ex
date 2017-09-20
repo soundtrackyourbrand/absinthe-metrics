@@ -1,7 +1,7 @@
 defmodule AbsintheMetrics.Backend.PrometheusHistogram do
   @behaviour AbsintheMetrics
-  @query_metric_name :graphql_query_duration_microseconds
-  @field_metric_name :graphql_fields_duration_microseconds
+  @query_metric_name :graphql_query_duration_milliseconds
+  @field_metric_name :graphql_fields_duration_milliseconds
   use Prometheus
 
   def field(:query, _field, buckets: buckets) do
