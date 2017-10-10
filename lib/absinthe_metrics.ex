@@ -6,7 +6,7 @@ defmodule AbsintheMetrics do
   @callback field(object :: String.t, field :: String.t, args :: []) :: none
 
   defmacro __using__(opts) do
-    adapter = Keyword.get(opts, :adapter, AbsintheMetrics.Echo)
+    adapter = Keyword.get(opts, :adapter, AbsintheMetrics.Backends.Echo)
     arguments = Keyword.get(opts, :arguments, [])
 
     quote do
