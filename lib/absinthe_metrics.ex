@@ -2,12 +2,16 @@ defmodule AbsintheMetrics do
   alias Absinthe.Resolution
   @behaviour Absinthe.Middleware
 
-  @callback instrument(object :: atom, field :: atom, result :: any, time :: non_neg_integer) :: none
-  @callback field(object :: String.t, field :: String.t, args :: []) :: none
+  @callback instrument(object :: atom, field :: atom, result :: any, time :: non_neg_integer) :: any
+  @callback field(object :: String.t, field :: String.t, args :: []) :: any
 
   defmacro __using__(opts) do
     adapter = Keyword.get(opts, :adapter, AbsintheMetrics.Backend.Echo)
     arguments = Keyword.get(opts, :arguments, [])
+    wrapped_arguments = case arguments do
+      [] -> []
+      arguments -> [arguments]
+    end
 
     quote do
       def instrument([], _field, _obj), do: []
@@ -28,13 +32,9 @@ defmodule AbsintheMetrics do
         end
 
         for %{fields: fields} = object <- Absinthe.Schema.types(schema),
-          {k, %Absinthe.Type.Field{name: name, identifier: id} = field} <- fields,
-          instrumented?.(field) do
-            arguments = case unquote(arguments) do
-              [] -> []
-              arguments -> [arguments]
-            end
-            apply(unquote(adapter), :field, [object.identifier, field.identifier] ++ arguments)
+            {k, %Absinthe.Type.Field{name: name, identifier: id} = field} <- fields,
+            instrumented?.(field) do
+          apply(unquote(adapter), :field, [object.identifier, field.identifier] ++ unquote(wrapped_arguments))
         end
       end
     end
