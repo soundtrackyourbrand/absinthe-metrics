@@ -2,8 +2,8 @@ defmodule AbsintheMetrics do
   alias Absinthe.Resolution
   @behaviour Absinthe.Middleware
 
-  @callback instrument(object :: atom, field :: atom, result :: any, time :: non_neg_integer) :: none
-  @callback field(object :: String.t, field :: String.t, args :: []) :: none
+  @callback instrument(object :: atom, field :: atom, result :: any, time :: non_neg_integer) :: any
+  @callback field(object :: String.t, field :: String.t, args :: []) :: any
 
   defmacro __using__(opts) do
     adapter = Keyword.get(opts, :adapter, AbsintheMetrics.Backend.Echo)
