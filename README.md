@@ -9,7 +9,7 @@ Usage is fairly straight forward,
 ```elixir
 defmodule MyApp.Instrumenter do
 	use AbsintheMetrics,
-			backend: AbsintheMetrics.Backend.PrometheusHistogram,
+			adapter: AbsintheMetrics.Backend.PrometheusHistogram,
 			# See prometheus.ex for more examples
 			arguments: [buckets: {:exponential, 250, 1.5, 7}]
 end
@@ -50,7 +50,7 @@ defmodule LogBackend do
   def field(object, field, _args \\ []) do
     Logger.info("install field #{object}_#{field}")
   end
-  	
+
 	# Called every time a value is observed
 	# status can be :ok or :error
   def instrument(object, field, {status, _result}, time) do
