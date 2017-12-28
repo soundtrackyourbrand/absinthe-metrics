@@ -72,7 +72,7 @@ by adding `absinthe_metrics` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:absinthe_metrics, "~> 0.1.0"}
+    {:absinthe_metrics, "~> 0.9.0"}
   ]
 end
 ```
