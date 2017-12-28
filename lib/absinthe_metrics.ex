@@ -19,14 +19,14 @@ defmodule AbsintheMetrics do
       def instrument(middleware, %{__reference__: %{module: Absinthe.Type.BuiltIns.Introspection}}, _obj), do: middleware
 
       def instrument(middleware, field, _obj)  do
-        [{{AbsintheMetrics}, {unquote(adapter), unquote(arguments)}} | middleware]
+        [{{AbsintheMetrics, :call}, {unquote(adapter), unquote(arguments)}} | middleware]
       end
 
       def install(schema) do
         instrumented? = fn %{middleware: middleware} = field ->
           middleware
           |> Enum.any?(fn
-            {{AbsintheMetrics}, _} -> true
+            {{AbsintheMetrics, :call}, _} -> true
             _ -> false
           end)
         end
@@ -40,7 +40,7 @@ defmodule AbsintheMetrics do
     end
   end
 
-  def call(%Resolution{state: :unresolved} = res, {adapter, _}, _config) do
+  def call(%Resolution{state: :unresolved} = res, {adapter, _}) do
     now = :erlang.monotonic_time()
     %{res | middleware: res.middleware ++ [{{AbsintheMetrics, :after_resolve}, start_at: now, adapter: adapter, field: res.definition.schema_node.identifier, object: res.parent_type.identifier}]}
   end
