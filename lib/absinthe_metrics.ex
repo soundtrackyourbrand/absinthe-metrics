@@ -2,8 +2,8 @@ defmodule AbsintheMetrics do
   alias Absinthe.Resolution
   @behaviour Absinthe.Middleware
 
-  @callback instrument(object :: atom, field :: atom, result :: any, time :: non_neg_integer) :: any
-  @callback field(object :: String.t, field :: String.t, args :: []) :: any
+  @callback instrument(schema :: String.t, object :: atom, field :: atom, result :: any, time :: non_neg_integer) :: any
+  @callback field(schema :: String.t, object :: String.t, field :: String.t, args :: []) :: any
 
   defmacro __using__(opts) do
     adapter = Keyword.get(opts, :adapter, AbsintheMetrics.Backend.Echo)
@@ -34,25 +34,26 @@ defmodule AbsintheMetrics do
         for %{fields: fields} = object <- Absinthe.Schema.types(schema),
             {k, %Absinthe.Type.Field{name: name, identifier: id} = field} <- fields,
             instrumented?.(field) do
-          apply(unquote(adapter), :field, [object.identifier, field.identifier] ++ unquote(wrapped_arguments))
+          apply(unquote(adapter), :field, ["", object.identifier, field.identifier] ++ unquote(wrapped_arguments))
         end
       end
     end
   end
 
   def call(%Resolution{state: :unresolved} = res, {adapter, _}) do
+    schema = String.replace(Macro.underscore(res.schema), "/", "_")
     now = :erlang.monotonic_time()
-    %{res | middleware: res.middleware ++ [{{AbsintheMetrics, :after_resolve}, start_at: now, adapter: adapter, field: res.definition.schema_node.identifier, object: res.parent_type.identifier}]}
+    %{res | middleware: res.middleware ++ [{{AbsintheMetrics, :after_resolve}, start_at: now, adapter: adapter, field: res.definition.schema_node.identifier, object: res.parent_type.identifier, schema: schema}]}
   end
 
-  def after_resolve(%Resolution{state: :resolved} = res, [start_at: start_at, adapter: adapter, field: field, object: object]) do
+  def after_resolve(%Resolution{state: :resolved} = res, [start_at: start_at, adapter: adapter, field: field, object: object, schema: schema]) do
     end_at = :erlang.monotonic_time()
     diff =  end_at - start_at
     result = case res.errors do
       [] -> {:ok, res.value}
       errors -> {:error, errors}
     end
-    adapter.instrument(object, field, result, diff)
+    adapter.instrument(schema, object, field, result, diff)
 
     res
   end

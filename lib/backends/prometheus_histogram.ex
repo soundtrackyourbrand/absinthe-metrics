@@ -5,26 +5,26 @@ if Code.ensure_loaded?(Prometheus) do
     @field_metric_name :graphql_fields_duration_milliseconds
     use Prometheus
 
-    def field(:query, _field, buckets: buckets) do
+    def field(schema, :query, _field, buckets: buckets) do
       _ = Histogram.declare([name: @query_metric_name,
-                             labels: [:query, :status],
+                             labels: [:schema, :query, :status],
                              buckets: buckets,
                              help: "Resolution time for GraphQL queries"])
     end
 
-    def field(object, field, buckets: buckets) do
+    def field(schema, object, field, buckets: buckets) do
       _ = Histogram.declare([name: @field_metric_name,
-                             labels: [:object, :field, :status],
+                             labels: [:schema, :object, :field, :status],
                              buckets: buckets,
                              help: "Metrics for GraphQL field resolvers"])
     end
 
-    def instrument(:query, field, {status, _}, time) do
-      Histogram.observe([name: @query_metric_name, labels: [field, status]], time)
+    def instrument(schema, :query, field, {status, _}, time) do
+      Histogram.observe([name: @query_metric_name, labels: [schema, field, status]], time)
     end
 
-    def instrument(object, field, {status, _}, time) do
-      Histogram.observe([name: @field_metric_name, labels: [object, field, status]], time)
+    def instrument(schema, object, field, {status, _}, time) do
+      Histogram.observe([name: @field_metric_name, labels: [schema, object, field, status]], time)
     end
   end
 end
