@@ -5,8 +5,8 @@ defmodule AbsintheMetricsTest do
   defmodule Backend do
     @behaviour AbsintheMetrics
 
-    def field(_, _, _ \\ []), do: :ok
-    def instrument(object, field, {status, _}, _time), do: send(self(), {object, field, status})
+    def field(_, _, _, _ \\ []), do: :ok
+    def instrument(schema, object, field, {status, _}, _time), do: send(self(), {schema, object, field, status})
   end
 
   defmodule Instrumenter do
@@ -78,10 +78,10 @@ defmodule AbsintheMetricsTest do
     """
     |> Absinthe.run(Schema)
 
-    assert_receive {:query, :post, :ok}
-    assert_receive {:post, :author, :ok}
-    assert_receive {:post, :comments, :ok}
-    assert_receive {:comment, :author, :ok}
+    assert_receive {"absinthe_metrics_test_schema", :query, :post, :ok}
+    assert_receive {"absinthe_metrics_test_schema", :post, :author, :ok}
+    assert_receive {"absinthe_metrics_test_schema", :post, :comments, :ok}
+    assert_receive {"absinthe_metrics_test_schema", :comment, :author, :ok}
   end
 
 end
