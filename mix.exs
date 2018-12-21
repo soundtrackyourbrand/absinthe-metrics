@@ -4,7 +4,7 @@ defmodule AbsintheMetrics.Mixfile do
   def project do
     [
       app: :absinthe_metrics,
-      version: "0.9.0",
+      version: "1.0.0",
       elixir: "~> 1.4",
       start_permanent: Mix.env == :prod,
       deps: deps(),
@@ -26,7 +26,7 @@ defmodule AbsintheMetrics.Mixfile do
   defp deps do
     [
       {:absinthe, "~> 1.3"},
-      {:prometheus_ex, "~> 1.4", optional: true},
+      {:prometheus_ex, "~> 3.0", optional: true},
       {:ex_doc, ">= 0.0.0", only: :dev},
     ]
   end
