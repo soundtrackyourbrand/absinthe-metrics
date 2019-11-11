@@ -12,7 +12,7 @@ if Code.ensure_loaded?(Prometheus) do
                              help: "Resolution time for GraphQL queries"])
     end
 
-    def field(object, field, buckets: buckets) do
+    def field(_object, _field, buckets: buckets) do
       _ = Histogram.declare([name: @field_metric_name,
                              labels: [:object, :field, :status],
                              buckets: buckets,
