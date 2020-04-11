@@ -8,16 +8,16 @@ Usage is fairly straight forward,
 
 ```elixir
 defmodule MyApp.Instrumenter do
-	use AbsintheMetrics,
-			adapter: AbsintheMetrics.Backend.PrometheusHistogram,
-			# See prometheus.ex for more examples
-			arguments: [buckets: {:exponential, 250, 1.5, 7}]
+  use AbsintheMetrics,
+    adapter: AbsintheMetrics.Backend.PrometheusHistogram,
+    # See prometheus.ex for more examples
+    arguments: [buckets: {:exponential, 250, 1.5, 7}]
 end
 
 defmodule MyApp.Schema do
   use Absinthe.Schema
   def middleware(middlewares, field, object) do
-	  MyApp.Instrumenter.instrument(middlewares, field, object)
+    MyApp.Instrumenter.instrument(middlewares, field, object)
   end
 end
 
@@ -26,8 +26,8 @@ end
 defmodule MyApp do
   def start(_type, _args) do
     # initialize all available metrics in your schema
-	  MyApp.Instrumenter.install(MyApp.Schema)
-		# ...
+    MyApp.Instrumenter.install(MyApp.Schema)
+    # ...
   end
 end
 
@@ -45,14 +45,14 @@ defmodule LogBackend do
   @behaviour AbsintheMetrics
   require Logger
 
-	# Called during application start to allow you to register
-	# fields with your TSDB
+  # Called during application start to allow you to register
+  # fields with your TSDB
   def field(object, field, _args \\ []) do
     Logger.info("install field #{object}_#{field}")
   end
 
-	# Called every time a value is observed
-	# status can be :ok or :error
+  # Called every time a value is observed
+  # status can be :ok or :error
   def instrument(object, field, {status, _result}, time) do
     metric = "#{object}_#{field}"
     case status do
