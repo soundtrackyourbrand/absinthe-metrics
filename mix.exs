@@ -6,7 +6,7 @@ defmodule AbsintheMetrics.Mixfile do
       app: :absinthe_metrics,
       version: "1.0.0",
       elixir: "~> 1.4",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
       package: package(),
@@ -25,9 +25,9 @@ defmodule AbsintheMetrics.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:absinthe, "~> 1.3"},
+      {:absinthe, "~> 1.5"},
       {:prometheus_ex, "~> 3.0", optional: true},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 

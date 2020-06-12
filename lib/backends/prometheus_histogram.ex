@@ -6,17 +6,23 @@ if Code.ensure_loaded?(Prometheus) do
     use Prometheus
 
     def field(:query, _field, buckets: buckets) do
-      _ = Histogram.declare([name: @query_metric_name,
-                             labels: [:query, :status],
-                             buckets: buckets,
-                             help: "Resolution time for GraphQL queries"])
+      _ =
+        Histogram.declare(
+          name: @query_metric_name,
+          labels: [:query, :status],
+          buckets: buckets,
+          help: "Resolution time for GraphQL queries"
+        )
     end
 
     def field(_object, _field, buckets: buckets) do
-      _ = Histogram.declare([name: @field_metric_name,
-                             labels: [:object, :field, :status],
-                             buckets: buckets,
-                             help: "Metrics for GraphQL field resolvers"])
+      _ =
+        Histogram.declare(
+          name: @field_metric_name,
+          labels: [:object, :field, :status],
+          buckets: buckets,
+          help: "Metrics for GraphQL field resolvers"
+        )
     end
 
     def instrument(:query, field, {status, _}, time) do
