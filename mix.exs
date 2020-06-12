@@ -27,7 +27,7 @@ defmodule AbsintheMetrics.Mixfile do
     [
       {:absinthe, "~> 1.5"},
       {:prometheus_ex, "~> 3.0", optional: true},
-      {:ex_doc, ">= 0.0.0", only: :dev}
+      {:ex_doc, ">= 0.22.0", only: :dev}
     ]
   end
 
