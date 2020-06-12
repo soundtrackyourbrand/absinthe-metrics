@@ -1,6 +1,6 @@
 language: elixir
 sudo: false
-elixir: 1.4.4
+elixir: 1.6
 otp_release: 19.3
 notifications:
   recipients:
