@@ -5,7 +5,7 @@ defmodule AbsintheMetricsTest do
   defmodule Backend do
     @behaviour AbsintheMetrics
 
-    def field(object, field, args \\ []) do
+    def field(object, field, _args \\ []) do
       send(self(), {:install, object, field})
     end
 
