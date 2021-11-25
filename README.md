@@ -1,10 +1,15 @@
 # AbsintheMetrics
 
 [![Build Status](https://travis-ci.org/soundtrackyourbrand/absinthe-metrics.svg?branch=master)](https://travis-ci.org/soundtrackyourbrand/absinthe-metrics)
+[![Module Version](https://img.shields.io/hexpm/v/absinthe_metrics.svg)](https://hex.pm/packages/absinthe_metrics)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/absinthe_metrics/)
+[![Total Download](https://img.shields.io/hexpm/dt/absinthe_metrics.svg)](https://hex.pm/packages/absinthe_metrics)
+[![License](https://img.shields.io/hexpm/l/absinthe_metrics.svg)](https://github.com/soundtrackyourbrand/absinthe-metrics/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/soundtrackyourbrand/absinthe-metrics.svg)](https://github.com/soundtrackyourbrand/absinthe-metrics/commits/master)
 
 AbsintheMetrics provides time (or counter) based metrics for your [Absinthe](https://github.com/absinthe-graphql/absinthe) resolvers to allow you to keep track of where your queries are spending their time.
 
-Usage is fairly straight forward,
+Usage is fairly straight forward:
 
 ```elixir
 defmodule MyApp.Instrumenter do
@@ -33,9 +38,7 @@ end
 
 ```
 
-
 How metrics are gathered depends on the backend, but for `PrometheusHistogram` the format is `#{object}_#{field}_duration_microseconds` or `query_field_duration_microseconds` for root queries.
-
 
 ### Adding backends
 Adding additional backends is pretty straight forward, you just need to implement the `AbsintheMetrics` behaviour,
@@ -63,11 +66,10 @@ defmodule LogBackend do
 end
 ```
 
-
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `absinthe_metrics` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `:absinthe_metrics` to your list of
+dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -77,7 +79,9 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/absinthe_metrics](https://hexdocs.pm/absinthe_metrics).
+## Copyright and License
 
+Copyright (c) 2017 Soundtrack Your Brand
+
+This work is free. You can redistribute it and/or modify it under the
+terms of the MIT License. See the [LICENSE.md](./LICENSE.md) file for more details.
